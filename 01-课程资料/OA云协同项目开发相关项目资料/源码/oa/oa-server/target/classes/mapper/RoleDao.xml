@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.xdq.demo.dao.RoleDao">
+
+    <resultMap id="roleResultMap" type="org.xdq.demo.model.Role">
+
+        <id property="ro_id" column="ro_id"/>
+        <result property="ro_name" column="ro_name"/>
+        <collection property="funNameList" column="ro_id" ofType="string" select="findFunNameList"/>
+
+    </resultMap>
+
+    <select id="findFunNameList" resultType="string">
+        <!-- 根据角色编号查询，角色的权限名称 -->
+        select f.f_name
+        from t_rf rf
+                join t_fun f on rf.f_id = f.f_id
+        where rf.ro_id = #{id}
+    </select>
+
+    <select id="findRoleList" resultMap="roleResultMap">
+
+        select
+            ro_id,
+            ro_name
+        from t_role
+        <where>
+            <if test="ro_id != null and ro_id != ''">
+                instr(ro_id,#{ro_id}) > 0
+            </if>
+            <if test="ro_name != null and ro_name != ''">
+                and instr(ro_name,#{ro_name}) > 0
+            </if>
+        </where>
+
+    </select>
+
+    <delete id="deleteRole">
+        delete from t_role
+        <where>
+            <foreach collection="ids" item="id" separator="or" open="" close="">
+                ro_id = #{id}
+            </foreach>
+        </where>
+    </delete>
+
+    <resultMap id="funResultMap" type="org.xdq.demo.vo.MenuVo">
+        <id property="menuId" column="p_id"/>
+        <result property="menuName" column="p_name"/>
+        <collection property="children" ofType="org.xdq.demo.vo.MenuVo">
+            <id property="menuId" column="f_id"/>
+            <result property="menuName" column="f_name"/>
+        </collection>
+    </resultMap>
+
+    <select id="findAllFunList" resultMap="funResultMap">
+        select
+            p.f_id p_id,
+            p.f_name p_name,
+            c.f_id,
+            c.f_name
+        from t_fun p
+                join t_fun c on p.f_id = c.f_pid
+        where c.f_ismenu = 1
+    </select>
+    
+    <insert id="insertRoleFun">
+        insert into t_rf(ro_id,f_id)
+        values 
+        <foreach collection="funIds" item="funId" separator=",">
+            (#{roleId},#{funId})
+        </foreach>
+    </insert>
+
+    <select id="findExistsUser" resultType="boolean">
+        select
+            count(u_id)
+        from t_ur
+        where
+            ro_id in
+            <foreach collection="roleIds" item="id" separator="," open="(" close=")">
+                #{id}
+            </foreach>
+    </select>
+
+    <select id="findExistsFun" resultType="boolean">
+        select
+            count(f_id)
+        from t_rf
+        where
+            ro_id in
+            <foreach collection="roleIds" item="id" separator="," open="(" close=")">
+                #{id}
+            </foreach>
+    </select>
+
+</mapper>

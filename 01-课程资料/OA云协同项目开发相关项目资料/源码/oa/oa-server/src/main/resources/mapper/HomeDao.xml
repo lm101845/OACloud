@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.xdq.demo.dao.HomeDao">
+
+    <resultMap id="menuResultMap" type="org.xdq.demo.vo.MenuVo">
+        <id property="menuId" column="p_id"/>
+        <result property="menuName" column="p_name"/>
+        <collection property="children" ofType="org.xdq.demo.vo.MenuVo">
+            <id property="menuId" column="f_id"/>
+            <result property="menuName" column="f_name"/>
+            <result property="menuUrl" column="f_url"/>
+        </collection>
+    </resultMap>
+
+
+    <select id="findMenuList"  resultMap="menuResultMap">
+        select distinct
+            p.f_id p_id ,
+            p.f_name p_name,
+            c.f_id,
+            c.f_name,
+            c.f_url
+
+        from t_fun p
+                join t_fun   c on p.f_id = c.f_pid
+                join t_rf   rf on c.f_id = rf.f_id
+                join t_role ro on rf.ro_id = ro.ro_id
+                join t_ur   ur on ro.ro_id = ur.ro_id
+
+        where
+            p.f_ismenu = 1 and c.f_ismenu = 1 and ur.u_id = #{userId}
+
+
+    </select>
+</mapper>

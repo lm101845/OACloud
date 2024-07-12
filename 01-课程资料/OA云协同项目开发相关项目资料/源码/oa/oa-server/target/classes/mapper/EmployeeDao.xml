@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.xdq.demo.dao.EmployeeDao">
+
+    <select id="findEmployeeList" resultType="org.xdq.demo.model.Employee">
+
+        select
+            e.* , d.d_name,
+            (exists (select u_id from t_user where u_id = e.e_id)) account,
+            (exists (select dep_id,leader_id from t_mgr where dep_id = e.d_id and leader_id = e.e_id) ) leader
+        from t_emp e
+                left join t_dep d on e.d_id = d.d_id
+        <where>
+            <if test="e_id != null and e_id != ''">
+                instr(e_id,#{e_id}) > 0
+            </if>
+            <if test="e_name != null and e_name != ''">
+                and instr(e_name,#{e_name}) > 0
+            </if>
+            <if test="e_sex != null">
+                and e_sex = #{e_sex}
+            </if>
+
+            <if test="e_status != null">
+                and e_status = #{e_status}
+            </if>
+
+            <if test="d_id != null">
+                and d.d_id = #{d_id}
+            </if>
+
+            <if test="e_birth_start != null">
+                and e_birth &gt;= #{e_birth_start}
+            </if>
+
+            <if test="e_birth_end != null">
+                and e_birth &lt;= #{e_birth_end}
+            </if>
+
+        </where>
+
+    </select>
+
+
+    <delete id="deleteEmp">
+        delete from t_emp
+        <where>
+            <foreach collection="ids" item="id" separator="or" open="" close="">
+                e_id = #{id}
+            </foreach>
+        </where>
+    </delete>
+
+    <select id="findExistsUndetermined" resultType="boolean">
+
+        select
+            count(e_id)
+        from t_emp
+
+        <where>
+            e_status > 0 and
+            <foreach collection="ids" item="id" separator="or" open="(" close=")">
+                e_id = #{id}
+            </foreach>
+        </where>
+
+    </select>
+
+</mapper>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.xdq.demo.dao.DepDao">
+
+    <select id="findDepList" resultType="org.xdq.demo.model.Dep">
+
+        select
+            d_id,
+            d_name,
+            d_remark,
+            d_status
+        from t_dep
+        <where>
+            <if test="d_id != null and d_id != ''">
+                instr(d_id,#{d_id}) > 0
+            </if>
+            <if test="d_name != null and d_name != ''">
+                and instr(d_name,#{d_name}) > 0
+            </if>
+            <if test="d_remark != null and d_remark != ''">
+                and instr(d_remark,#{d_remark}) > 0
+            </if>
+            <if test="d_status != null ">
+                and d_status = #{d_status}
+            </if>
+        </where>
+
+    </select>
+
+    <delete id="deleteDep">
+        delete from t_dep
+        <where>
+            <foreach collection="ids" item="id" separator="or" open="" close="">
+                d_id = #{id}
+            </foreach>
+        </where>
+    </delete>
+
+    <select id="findExistsUndetermined" resultType="boolean">
+
+        select
+            count(d_id)
+        from t_dep
+
+        <where>
+            d_status > 0 and
+            <foreach collection="ids" item="id" separator="or" open="(" close=")">
+                d_id = #{id}
+            </foreach>
+        </where>
+
+    </select>
+
+
+</mapper>

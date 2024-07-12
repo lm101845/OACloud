@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.xdq.demo.dao.ExamDao">
+
+    <select id="findExamList" resultType="org.xdq.demo.model.Leave">
+        select
+            l.*, d.d_name, e.e_name
+
+        from t_leave l
+                join t_emp e on l.e_id = e.e_id
+                join t_dep d on e.d_id = d.d_id
+                join t_mgr m on d.d_id = m.dep_id
+
+        <where>
+            l.l_status > 0 and m.leader_id = #{leader_id}
+            <if test="l_id != null and l_id != '' ">
+                and instr(l_id,#{l_id}) > 0
+            </if>
+            <if test="e_name != null and e_name != '' ">
+                and instr(e_name,#{e_name}) > 0
+            </if>
+            <if test="l_cause != null and l_cause != '' ">
+                and instr(l_cause,#{l_cause}) > 0
+            </if>
+            <if test="l_status != null ">
+                and l_status = #{l_status}
+            </if>
+        </where>
+        order by
+            l_status,
+            l_submit_date desc,
+            l_sp_date desc
+    </select>
+
+</mapper>

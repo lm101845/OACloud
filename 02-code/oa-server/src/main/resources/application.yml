@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/oadb
+    username: root
+    password: 123456
+mybatis:
+  mapper-locations: classpath:mapper/**/*.xml
+logging:
+  level:
+    root: info
+    web: trace
+    org.xdq.demo: debug
+pagehelper:
+  #分页合理化
+  reasonable: true
+  helper-dialect: mysql
+server:
+  port: 9999
+
+#自定义配置
+oa:
+  token:
+    expire-time: 99999999     #令牌的过期时间，单位：秒
+  anonUrls: #无需登录即可访问的url,可以使用ant格式
+    - /security/login   #表示放行登录接口
+    - /t
+
+
