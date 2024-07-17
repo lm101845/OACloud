@@ -13,6 +13,4 @@ public class TokenUser {
     private String userName;
 
     private String userIP;
-
-
 }

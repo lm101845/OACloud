@@ -29,19 +29,19 @@ axiosInstance.interceptors.request.use(function (config) {
         }
     }
 
-    if(!config.method || !(config.method instanceof String) ||config.method.toLowerCase() === 'get' ){
+    if(!config.method || typeof(config.method) != 'string' ||config.method.toLowerCase() === 'get' ){
         config.params?  config.params['_t'] = new Date().getTime() : config.params = {_t:new Date().getTime() };
     }
 
     return config;
-  }, function (error) {
+}, function (error) {
     // 对请求错误做些什么
     if(loading){
         loading.close();
         loading=false;
     }
     return Promise.reject(error);
-  });
+});
 
 // Add a response interceptor 拦截响应
 axiosInstance.interceptors.response.use(function (response) {

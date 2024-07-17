@@ -25,5 +25,6 @@ oa:
   anonUrls: #无需登录即可访问的url,可以使用ant格式
     - /security/login   #表示放行登录接口
     - /t
+    - /res/**     #ant地址样式
 
 

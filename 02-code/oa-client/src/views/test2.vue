@@ -13,12 +13,6 @@
       <div>{{formInline.DEL}}</div>
     </el-form-item>
   </el-form>
-  <el-table :data="tableList">
-    <el-table-column type="selection" width="55" />
-    <el-table-column prop="NO" label="账号"></el-table-column>
-    <el-table-column prop="NAME" label="账户名称"></el-table-column>
-    <el-table-column label="操作"fixed="right"></el-table-column>
-  </el-table>
 </template>
 
 <script>
@@ -48,12 +42,6 @@ export default {
     changeOperatorId(){
 
     }
-  },
-  mounted() {
-    this.$nextTick(() => {
-      console.log('nextTick')
-    })
-    console.log('2345')
   }
 }
 </script>

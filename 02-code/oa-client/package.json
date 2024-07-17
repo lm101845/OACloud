@@ -1,5 +1,5 @@
 {
-  "name": "oa-client--",
+  "name": "oa-client",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,15 +10,15 @@
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.1",
-    "axios": "^1.7.2",
-    "element-plus": "^2.7.6",
+    "axios": "^1.6.7",
+    "element-plus": "^2.6.0",
     "path": "^0.12.7",
-    "uuid": "^10.0.0",
-    "vue": "^3.4.29",
-    "vue-router": "4"
+    "uuid": "^9.0.1",
+    "vue": "^3.4.19",
+    "vue-router": "^4.3.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^5.0.5",
-    "vite": "^5.3.1"
+    "@vitejs/plugin-vue": "^5.0.4",
+    "vite": "^5.1.4"
   }
 }

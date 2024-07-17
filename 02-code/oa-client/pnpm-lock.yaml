@@ -12,29 +12,29 @@ importers:
         specifier: ^2.3.1
         version: 2.3.1(vue@3.4.31)
       axios:
-        specifier: ^1.7.2
+        specifier: ^1.6.7
         version: 1.7.2
       element-plus:
-        specifier: ^2.7.6
+        specifier: ^2.6.0
         version: 2.7.6(vue@3.4.31)
       path:
         specifier: ^0.12.7
         version: 0.12.7
       uuid:
-        specifier: ^10.0.0
-        version: 10.0.0
+        specifier: ^9.0.1
+        version: 9.0.1
       vue:
-        specifier: ^3.4.29
+        specifier: ^3.4.19
         version: 3.4.31
       vue-router:
-        specifier: '4'
+        specifier: ^4.3.0
         version: 4.4.0(vue@3.4.31)
     devDependencies:
       '@vitejs/plugin-vue':
-        specifier: ^5.0.5
+        specifier: ^5.0.4
         version: 5.0.5(vite@5.3.3)(vue@3.4.31)
       vite:
-        specifier: ^5.3.1
+        specifier: ^5.1.4
         version: 5.3.3
 
 packages:
@@ -490,8 +490,8 @@ packages:
   util@0.10.4:
     resolution: {integrity: sha512-0Pm9hTQ3se5ll1XihRic3FDIku70C+iHUdT/W926rSgHV5QgXsYbKZN8MSC3tJtSkhuROzvsQjAaFENRXr+19A==}
 
-  uuid@10.0.0:
-    resolution: {integrity: sha512-8XkAphELsDnEGrDxUOHB3RGvXz6TeuYSGEZBOjtTtPm2lwhGBjLgOzLHB63IUWfBpNucQjND6d3AOudO+H3RWQ==}
+  uuid@9.0.1:
+    resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
     hasBin: true
 
   vite@5.3.3:
@@ -951,7 +951,7 @@ snapshots:
     dependencies:
       inherits: 2.0.3
 
-  uuid@10.0.0: {}
+  uuid@9.0.1: {}
 
   vite@5.3.3:
     dependencies:
